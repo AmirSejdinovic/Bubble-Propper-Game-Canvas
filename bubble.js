@@ -5,16 +5,41 @@ canvas.style.backgroundColor = 'black';
 document.body.prepend(canvas);
 const ctx = canvas.getContext('2d');
 
-const bubbleCount = 30;
+const game = {req:''};
+const bubble = {bubbleCount:30,bubbles:[]};
 
-for(let x = 0; x<bubbleCount;x++){
+
+
+/*for(let x = 0; x<bubble.bubbleCount;x++){
   createBubble();
+}*/
+
+function draw(){
+  if(bubble.bubbles.length < bubble.bubbleCount){
+    //Create new bubble
+    bubbleMaker();
+  }
+  bubble.bubbles.forEach((bubble, index)=>{
+    drawBubble(bubble.x,bubble.y,bubble.size);
+  });
+  game.req = requestAnimationFrame(draw);
 }
 
-function createBubble(){
-     let bubbleSize = Math.random()*10+15;
-    let xPos = Math.random() * (canvas.width - bubbleSize);
-    let yPos = Math.random() * (canvas.height - bubbleSize);
+function bubbleMaker(){
+  let bubbleSize = Math.random()*10+15;
+  let xPos = Math.random() * (canvas.width - bubbleSize);
+  let yPos = Math.random() * (canvas.height - bubbleSize);
+  bubble.bubbles.push({
+    x: xPos,
+    y: yPos,
+    size: bubbleSize
+
+  
+  });
+}
+
+function drawBubble(xPos,yPos,bubbleSize){
+     
 
     const gradient = ctx.createRadialGradient(xPos,yPos-10,bubbleSize-15,xPos, yPos,bubbleSize+10);
 
@@ -30,4 +55,6 @@ function createBubble(){
     ctx.stroke();
 
 }
+
+game.req = requestAnimationFrame(draw);
 
