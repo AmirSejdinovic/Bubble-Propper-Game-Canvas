@@ -5,7 +5,10 @@ canvas.style.backgroundColor = 'black';
 document.body.prepend(canvas);
 const ctx = canvas.getContext('2d');
 
-const game = {req:''};
+const game = {
+  req:'',
+  score:0
+};
 const bubble = {
   bubbleCount:30,
   speed:2,
@@ -33,7 +36,7 @@ canvas.addEventListener('click', (e)=>{
   };
 
  });*/
- 
+
  //colCheck(a,b)
 })
 
@@ -77,11 +80,23 @@ function draw(){
     }
     cliker.forEach((dot)=>{
        if(colCheck(bub,dot)){
-         bubble.bubbles.splice(index,1);
+         let popped = bubble.bubbles.splice(index,1);
+         let val = Math.ceil(popped[0].size);
+         game.score += val;
        }
     })
     drawBubble(bub.x,bub.y,bub.size,bub.color);
   });
+  
+  ctx.fillStyle = 'rgba(0,0,0,0.5)';
+  ctx.fillRect(0,20,canvas.width,40);
+  ctx.beginPath();
+  ctx.fillStyle = 'white';
+  ctx.font = '36px serif';
+  ctx.textAlign = 'center';
+  let tempOutput = `SCORE: ${game.score}`;
+  ctx.fillText(tempOutput, canvas.width/2,50);
+
   game.req = requestAnimationFrame(draw);
 }
 
