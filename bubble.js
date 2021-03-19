@@ -23,13 +23,17 @@ canvas.addEventListener('click', (e)=>{
   const mouseClick = {
     x:e.clientX-rect.left,
     y:e.clientY-rect.top,
-    size:10
+    size:30
   }
   cliker.push(mouseClick);
  // console.log(mouseClick);
- bubble.bubbles.forEach((bub, index)=>{
-  colCheck(bub,mouseClick);
- });
+ /*bubble.bubbles.forEach((bub, index)=>{
+  if(colCheck(bub,mouseClick)){
+    bubble.bubbles.splice(index,1);
+  };
+
+ });*/
+ 
  //colCheck(a,b)
 })
 
@@ -58,10 +62,11 @@ function draw(){
       //ctx.fillRect(dot.x-(dot.size/2),dot.y-(dot.size/2),dot.size,dot.size);
       ctx.arc(dot.x,dot.y,dot.size,0,2*Math.PI);
       ctx.stroke();
-      dot.size--;
+      dot.size-=1;
       if(dot.size<1){
         cliker.splice(index,1);
       }
+
   });
   bubble.bubbles.forEach((bub, index)=>{
     bub.y-=bubble.speed;
@@ -70,6 +75,11 @@ function draw(){
       let temp = bubble.bubbles.splice(index,1);
       //console.log(temp);
     }
+    cliker.forEach((dot)=>{
+       if(colCheck(bub,dot)){
+         bubble.bubbles.splice(index,1);
+       }
+    })
     drawBubble(bub.x,bub.y,bub.size,bub.color);
   });
   game.req = requestAnimationFrame(draw);
