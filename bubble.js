@@ -23,13 +23,26 @@ canvas.addEventListener('click', (e)=>{
   const mouseClick = {
     x:e.clientX-rect.left,
     y:e.clientY-rect.top,
-    width:5,
-    height:5,
     size:10
   }
   cliker.push(mouseClick);
  // console.log(mouseClick);
+ bubble.bubbles.forEach((bub, index)=>{
+  colCheck(bub,mouseClick);
+ });
+ //colCheck(a,b)
 })
+
+function colCheck(a,b){
+    //let horz = a.x < b.x+b.size && a.x+a.size > b.x;
+    //let vert = a.y < b.y+b.size && a.y+a.size > b.y;
+    let hit = a.x < b.x+b.size && a.x+a.size > b.x && a.y < b.y+b.size && a.y+a.size > b.y;
+   if(hit){
+    console.log(a);
+    console.log(b);
+   }
+   return hit;
+}
 
 function draw(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
